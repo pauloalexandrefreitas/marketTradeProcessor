@@ -134,7 +134,7 @@ gulp.task('inject:vendor', function () {
 
     return es.merge(stream, gulp.src(config.sassVendor)
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(inject(gulp.src(bowerFiles({filter:['**/*.{scss,sass}']}), {read: false}), {
+        .pipe(inject(gulp.src(bowerFiles({filter:['**/*.{scss,sass}', '!/bootstrap-sass/assets/stylesheets/']}), {read: false}), {
             name: 'bower',
             relative: true
         }))

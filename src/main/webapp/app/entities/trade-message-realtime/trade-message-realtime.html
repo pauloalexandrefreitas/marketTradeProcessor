@@ -1,6 +1,8 @@
 <div>
 	<h2 translate="marketTradeProcessorApp.tradeMessage.home.title">Trade Messages</h2>
 	<jhi-alert></jhi-alert>
+	<uib-tabset active="active"> <uib-tab index="0"> <uib-tab-heading> <i class="fa fa-table"></i> <span
+		translate="marketTradeProcessorApp.tradeMessage.home.title"> </span> </uib-tab-heading> <br />
 	<div class="table-responsive">
 		<table class="jh-table table table-striped">
 			<thead>
@@ -31,4 +33,38 @@
 			</tbody>
 		</table>
 	</div>
+	</uib-tab> <uib-tab index="1" select="vm.loadChartData()"> <uib-tab-heading> <i class="fa fa-pie-chart"></i> <span
+		translate="marketTradeProcessorApp.tradeMessage.home.title"> </span> </uib-tab-heading> <br />
+	<div class="row">
+		<div class="row">
+			<div class="col-md-6">
+				<h4>Currency From</h4>
+				<form>
+					<div class="form-group">
+						<label for="currencyFrom">Currency From</label>
+						<select name="currencyFrom" class="form-control" ng-options="item as item for item in vm.currencyFromLabels track by item" ng-model="vm.currencyFromLabel">
+						</select>
+					</div>
+				</form>
+				<div class="chart-container" ng-show="vm.currencyFromLabel">
+					<canvas class="chart chart-bar" chart-options="vm.chartOptions" chart-data="vm.currencyFromData[vm.currencyFromLabel]" chart-labels="vm.currencyFromLabels"
+						chart-series="vm.currencyFromSeries" chart-options="options"></canvas>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h4>Currency To</h4>
+				<form>
+					<div class="form-group">
+						<label for="currencyTo">Currency To</label>
+						<select name="currencyTo" class="form-control" ng-options="item as item for item in vm.currencyToLabels track by item" ng-model="vm.currencyToLabel">
+						</select>
+					</div>
+				</form>
+				<div class="chart-container" ng-show="vm.currencyToLabel">
+					<canvas class="chart chart-bar" chart-options="vm.chartOptions" chart-data="vm.currencyToData[vm.currencyToLabel]" chart-labels="vm.currencyToLabels"
+						chart-series="vm.currencyToSeries" chart-options="options"></canvas>
+				</div>
+			</div>
+		</div>
+	</uib-tab> </uib-tabset>
 </div>

@@ -71,5 +71,9 @@
   "scripts": {
     "test": "gulp test",
     "postinstall": "webdriver-manager update"
+  },
+  "dependencies": {
+    "angular-chart.js": "^1.0.0",
+    "chart.js": "^2.2.1"
   }
 }
