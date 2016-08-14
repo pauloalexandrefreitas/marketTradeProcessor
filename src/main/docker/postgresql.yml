@@ -1,0 +1,12 @@
+version: '2'
+services:
+    markettradeprocessor-postgresql:
+        container_name: markettradeprocessor-postgresql
+        image: postgres:9.5.3
+        # volumes:
+        #     - ~/volumes/jhipster/marketTradeProcessor/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=marketTradeProcessor
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

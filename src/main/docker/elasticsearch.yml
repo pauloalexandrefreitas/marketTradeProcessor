@@ -1,0 +1,10 @@
+version: '2'
+services:
+    markettradeprocessor-elasticsearch:
+        container_name: markettradeprocessor-elasticsearch
+        image: elasticsearch:1.7.5
+        # volumes:
+        #     - ~/volumes/jhipster/marketTradeProcessor/elasticsearch/:/usr/share/elasticsearch/data/
+        ports:
+            - 9200:9200
+            - 9300:9300
