@@ -1,0 +1,29 @@
+{
+    "marketTradeProcessorApp": {
+        "tradeMessage" : {
+            "home": {
+                "title": "Trade Messages",
+                "createLabel": "Maak een nieuwe Trade Message",
+                "createOrEditLabel": "Maak of wijzig een Trade Message",
+                "search": "Search for Trade Message"
+            },
+            "created": "A new Trade Message is created with identifier {{ param }}",
+            "updated": "A Trade Message is updated with identifier {{ param }}",
+            "deleted": "A Trade Message is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Bent u zeker dat u Trade Message {{ id }} wilt verwijderen?"
+            },
+            "detail": {
+                "title": "Trade Message"
+            },
+            "userId": "User Id",
+            "currencyFrom": "Currency From",
+            "currencyTo": "Currency To",
+            "amountSell": "Amount Sell",
+            "amountBuy": "Amount Buy",
+            "rate": "Rate",
+            "timePlaced": "Time Placed",
+            "originatingCountry": "Originating Country"
+        }
+    }
+}

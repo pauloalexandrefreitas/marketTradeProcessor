@@ -5,9 +5,9 @@
         .module('marketTradeProcessorApp')
         .factory('Principal', Principal);
 
-    Principal.$inject = ['$q', 'Account', 'JhiTrackerService'];
+    Principal.$inject = ['$q', 'Account', 'JhiTrackerService', 'TradeMessageRealTimeService'];
 
-    function Principal ($q, Account, JhiTrackerService) {
+    function Principal ($q, Account, JhiTrackerService, TradeMessageRealTimeService) {
         var _identity,
             _authenticated = false;
 
@@ -80,6 +80,7 @@
                 _authenticated = true;
                 deferred.resolve(_identity);
                 JhiTrackerService.connect();
+                TradeMessageRealTimeService.connect();
             }
 
             function getAccountCatch () {

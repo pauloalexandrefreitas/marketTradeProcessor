@@ -1,0 +1,34 @@
+<div>
+	<h2 translate="marketTradeProcessorApp.tradeMessage.home.title">Trade Messages</h2>
+	<jhi-alert></jhi-alert>
+	<div class="table-responsive">
+		<table class="jh-table table table-striped">
+			<thead>
+				<tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+					<th><span translate="global.field.id">ID</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.userId">User Id</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.currencyFrom">Currency From</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.currencyTo">Currency To</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.amountSell">Amount Sell</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.amountBuy">Amount Buy</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.rate">Rate</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.timePlaced">Time Placed</span></th>
+					<th><span translate="marketTradeProcessorApp.tradeMessage.originatingCountry">Originating Country</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="tradeMessage in vm.tradeMessages |orderBy:'-id' track by tradeMessage.id">
+					<td><a ui-sref="trade-message-detail({id:tradeMessage.id})">{{tradeMessage.id}}</a></td>
+					<td>{{tradeMessage.userId}}</td>
+					<td>{{tradeMessage.currencyFrom}}</td>
+					<td>{{tradeMessage.currencyTo}}</td>
+					<td>{{tradeMessage.amountSell | number: 2}}</td>
+					<td>{{tradeMessage.amountBuy | number: 2}}</td>
+					<td>{{tradeMessage.rate | number: 5}}</td>
+					<td>{{tradeMessage.timePlaced | date:'medium'}}</td>
+					<td>{{tradeMessage.originatingCountry}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

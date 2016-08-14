@@ -1,0 +1,170 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTradeMessageLabel" translate="marketTradeProcessorApp.tradeMessage.home.createOrEditLabel">Create or edit a Trade Message</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.tradeMessage.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.tradeMessage.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.userId" for="field_userId">User Id</label>
+            <input type="number" class="form-control" name="userId" id="field_userId"
+                    ng-model="vm.tradeMessage.userId"
+                    required />
+            <div ng-show="editForm.userId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.userId.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.userId.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.currencyFrom" for="field_currencyFrom">Currency From</label>
+            <input type="text" class="form-control" name="currencyFrom" id="field_currencyFrom"
+                    ng-model="vm.tradeMessage.currencyFrom"
+                    required ng-minlength="3" ng-maxlength="3" />
+            <div ng-show="editForm.currencyFrom.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.currencyFrom.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.currencyFrom.$error.minlength" translate="entity.validation.minlength" translate-value-min="3">
+                    This field is required to be at least 3 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.currencyFrom.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="3">
+                    This field cannot be longer than 3 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.currencyTo" for="field_currencyTo">Currency To</label>
+            <input type="text" class="form-control" name="currencyTo" id="field_currencyTo"
+                    ng-model="vm.tradeMessage.currencyTo"
+                    required ng-minlength="3" ng-maxlength="3" />
+            <div ng-show="editForm.currencyTo.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.currencyTo.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.currencyTo.$error.minlength" translate="entity.validation.minlength" translate-value-min="3">
+                    This field is required to be at least 3 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.currencyTo.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="3">
+                    This field cannot be longer than 3 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.amountSell" for="field_amountSell">Amount Sell</label>
+            <input type="number" class="form-control" name="amountSell" id="field_amountSell"
+                    ng-model="vm.tradeMessage.amountSell"
+                    required />
+            <div ng-show="editForm.amountSell.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.amountSell.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.amountSell.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.amountBuy" for="field_amountBuy">Amount Buy</label>
+            <input type="number" class="form-control" name="amountBuy" id="field_amountBuy"
+                    ng-model="vm.tradeMessage.amountBuy"
+                    required />
+            <div ng-show="editForm.amountBuy.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.amountBuy.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.amountBuy.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.rate" for="field_rate">Rate</label>
+            <input type="number" class="form-control" name="rate" id="field_rate"
+                    ng-model="vm.tradeMessage.rate"
+                    required />
+            <div ng-show="editForm.rate.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.rate.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.rate.$error.number" translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.timePlaced" for="field_timePlaced">Time Placed</label>
+                <div class="input-group">
+                    <input id="field_timePlaced" type="text" class="form-control" name="timePlaced" datetime-picker="{{dateformat}}" ng-model="vm.tradeMessage.timePlaced" is-open="vm.datePickerOpenStatus.timePlaced"
+                    required  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('timePlaced')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.timePlaced.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.timePlaced.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.timePlaced.$error.ZonedDateTimelocal" translate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="marketTradeProcessorApp.tradeMessage.originatingCountry" for="field_originatingCountry">Originating Country</label>
+            <input type="text" class="form-control" name="originatingCountry" id="field_originatingCountry"
+                    ng-model="vm.tradeMessage.originatingCountry"
+                    required ng-minlength="2" ng-maxlength="3" />
+            <div ng-show="editForm.originatingCountry.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.originatingCountry.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.originatingCountry.$error.minlength" translate="entity.validation.minlength" translate-value-min="2">
+                    This field is required to be at least 2 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.originatingCountry.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="3">
+                    This field cannot be longer than 3 characters.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

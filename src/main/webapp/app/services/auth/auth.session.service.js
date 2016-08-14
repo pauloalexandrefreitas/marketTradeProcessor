@@ -5,9 +5,9 @@
         .module('marketTradeProcessorApp')
         .factory('AuthServerProvider', AuthServerProvider);
 
-    AuthServerProvider.$inject = ['$http', '$localStorage' , 'JhiTrackerService'];
+    AuthServerProvider.$inject = ['$http', '$localStorage' , 'JhiTrackerService', 'TradeMessageRealTimeService'];
 
-    function AuthServerProvider ($http, $localStorage , JhiTrackerService) {
+    function AuthServerProvider ($http, $localStorage , JhiTrackerService, TradeMessageRealTimeService) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
@@ -43,6 +43,7 @@
 
         function logout () {
             JhiTrackerService.disconnect();
+            TradeMessageRealTimeService.disconnect();
 
             
             // logout from the server

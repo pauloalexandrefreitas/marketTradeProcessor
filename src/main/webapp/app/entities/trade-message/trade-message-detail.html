@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span translate="marketTradeProcessorApp.tradeMessage.detail.title">Trade Message</span> {{vm.tradeMessage.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.userId">User Id</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.userId}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.currencyFrom">Currency From</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.currencyFrom}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.currencyTo">Currency To</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.currencyTo}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.amountSell">Amount Sell</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.amountSell}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.amountBuy">Amount Buy</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.amountBuy}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.rate">Rate</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.rate}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.timePlaced">Time Placed</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.timePlaced | date:'medium'}}</span>
+        </dd>
+        <dt><span translate="marketTradeProcessorApp.tradeMessage.originatingCountry">Originating Country</span></dt>
+        <dd>
+            <span>{{vm.tradeMessage.originatingCountry}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="trade-message-detail.edit({id:vm.tradeMessage.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

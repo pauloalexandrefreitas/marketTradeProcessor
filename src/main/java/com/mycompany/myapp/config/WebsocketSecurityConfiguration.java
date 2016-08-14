@@ -15,7 +15,7 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
             // message types other than MESSAGE and SUBSCRIBE
             .nullDestMatcher().authenticated()
             // matches any destination that starts with /rooms/
-            .simpDestMatchers("/topic/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+            .simpDestMatchers("/topic/tracker").hasAuthority(AuthoritiesConstants.USER)
             .simpDestMatchers("/topic/**").authenticated()
             // (i.e. cannot send messages directly to /topic/, /queue/)
             // (i.e. cannot subscribe to /topic/messages/* to get messages sent to
