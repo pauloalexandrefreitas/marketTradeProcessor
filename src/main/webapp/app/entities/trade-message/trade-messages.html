@@ -15,8 +15,7 @@
 				<form name="searchForm" class="form-inline">
 					<div class="input-group pull-right">
 						<input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery"
-							placeholder="{{ 'marketTradeProcessorApp.tradeMessage.home.search' | translate }}">
-						<span class="input-group-btn width-min">
+							placeholder="{{ 'marketTradeProcessorApp.tradeMessage.home.search' | translate }}"> <span class="input-group-btn width-min">
 							<button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
 								<span class="glyphicon glyphicon-search"></span>
 							</button>
@@ -85,37 +84,55 @@
 		<jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
 		<uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
 	</div>
-	</uib-tab> <uib-tab index="1" select="vm.loadChartData()"> <uib-tab-heading> <i class="fa fa-pie-chart"></i> <span
-		translate="marketTradeProcessorApp.tradeMessage.home.title"> </span> </uib-tab-heading>
-		<br/>
+	</uib-tab> <uib-tab index="1" select="vm.loadCharts()"> <uib-tab-heading> <i class="fa fa-pie-chart"></i> <span
+		translate="marketTradeProcessorApp.tradeMessage.home.title"> </span> </uib-tab-heading> <br />
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<div class="btn-group">
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="null">All</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'1,d'">1d</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'1,w'">1w</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'1,M'">1m</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'3,M'">3m</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'6,M'">6m</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'1,y'">1y</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'2,y'">2y</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'5,y'">5y</label>
-				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'10,y'">10y</label>
+				<label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="null">All</label> <label class="btn btn-primary" ng-model="vm.dateRange"
+					uib-btn-radio="'1,d'">1d</label> <label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'1,w'">1w</label> <label class="btn btn-primary"
+					ng-model="vm.dateRange" uib-btn-radio="'1,M'">1m</label> <label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'3,M'">3m</label> <label
+					class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'6,M'">6m</label> <label class="btn btn-primary" ng-model="vm.dateRange"
+					uib-btn-radio="'1,y'">1y</label> <label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'2,y'">2y</label> <label class="btn btn-primary"
+					ng-model="vm.dateRange" uib-btn-radio="'5,y'">5y</label> <label class="btn btn-primary" ng-model="vm.dateRange" uib-btn-radio="'10,y'">10y</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Total Amounts By Market</h4>
+				<div class="chart-container">
+					<canvas id="global" class="chart chart-bar" chart-options="vm.chartOptions" chart-data="vm.marketData.data" chart-labels="vm.marketData.labels"
+						chart-series="vm.marketData.series"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Average Rate By Market</h4>
+				<div class="chart-container">
+					<canvas id="global" class="chart chart-line" chart-options="vm.chartOptions" chart-data="vm.marketRateData" chart-labels="vm.marketData.labels"></canvas>
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h4>Currency From</h4>
+				<h4>Total Amount By Originating Country:</h4>
 				<div class="chart-container">
-					<canvas class="chart chart-bar" chart-options="vm.chartOptions" chart-data="vm.currencyFromData" chart-labels="vm.currencyFromLabels"
-						chart-series="vm.currencyFromSeries" chart-options="options"></canvas>
+					<canvas id="global" class="chart chart-pie" chart-options="vm.chartOptions" chart-data="vm.countryData.data" chart-labels="vm.countryData.labels"></canvas>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<h4>Currency To</h4>
+				<h4>Total Amounts For Specific Market:</h4>
+				<form>
+					<div class="form-group">
+						<select name="market" class="form-control" ng-options="item as item for item in vm.marketData.labels track by item" ng-model="vm.currentMarket"
+							ng-change="vm.updateCurrentMarketData()">
+						</select>
+					</div>
+				</form>
 				<div class="chart-container">
-					<canvas class="chart chart-bar" chart-options="vm.chartOptions" chart-data="vm.currencyToData" chart-labels="vm.currencyToLabels"
-						chart-series="vm.currencyToSeries" chart-options="options"></canvas>
+					<canvas id="global" class="chart chart-polar-area" chart-options="vm.chartOptions" chart-data="vm.currentMarketData.data"
+						chart-labels="vm.currentMarketData.labels" chart-series="vm.currentMarketData.series"></canvas>
 				</div>
 			</div>
 		</div>

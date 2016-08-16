@@ -142,4 +142,34 @@ public class TradeMessageService {
 		return tradeMessageRepository.findByCurrencyToBetween(fromDate, toDate);
 	}
 
+	public List<Object> findByMarket() {
+		log.debug("Request to get TradeMessages by market");
+		return tradeMessageRepository.findByMarket();
+	}
+
+	public List<Object> findByMarket(ZonedDateTime fromDate, ZonedDateTime toDate) {
+		log.debug("Request to get TradeMessages by market between {} and {}", fromDate, toDate);
+		return tradeMessageRepository.findByMarket(fromDate, toDate);
+	}
+
+	public List<Object> findBySpecificMarket(String market) {
+		log.debug("Request to get TradeMessages by market {}", market);
+		return tradeMessageRepository.findBySpecificMarket(market);
+	}
+
+	public List<Object> findBySpecificMarket(String market, ZonedDateTime fromDate, ZonedDateTime toDate) {
+		log.debug("Request to get TradeMessages by market {} between {} and {}", market, fromDate, toDate);
+		return tradeMessageRepository.findBySpecificMarket(market, fromDate, toDate);
+	}
+
+	public List<Object> findByOriginatingCountry() {
+		log.debug("Request to get TradeMessages by market");
+		return tradeMessageRepository.findByOriginatingCountry();
+	}
+
+	public List<Object> findByOriginatingCountry(ZonedDateTime fromDate, ZonedDateTime toDate) {
+		log.debug("Request to get TradeMessages by originating country between {} and {}", fromDate, toDate);
+		return tradeMessageRepository.findByOriginatingCountry(fromDate, toDate);
+	}
+
 }

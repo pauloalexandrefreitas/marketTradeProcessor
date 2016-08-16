@@ -64,4 +64,52 @@ public class TradeMessageStatsResource {
 		return new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/trade-messages-stats/byMarket", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<Object>> getTradeMessagesGroupByMarket(
+			@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime fromDate,
+			@RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime toDate)
+			throws URISyntaxException {
+		log.debug("REST request to get a page of TradeMessages");
+		List<Object> results = null;
+		if (fromDate == null || toDate == null) {
+			results = tradeMessageService.findByMarket();
+		} else {
+			results = tradeMessageService.findByMarket(fromDate, toDate);
+		}
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/trade-messages-stats/specificMarket", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<Object>> getTradeMessagesGroupBySpecificMarket(@RequestParam(value = "market", required = true) String market,
+			@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime fromDate,
+			@RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime toDate)
+			throws URISyntaxException {
+		log.debug("REST request to get a page of TradeMessages");
+		List<Object> results = null;
+		if (fromDate == null || toDate == null) {
+			results = tradeMessageService.findBySpecificMarket(market);
+		} else {
+			results = tradeMessageService.findBySpecificMarket(market, fromDate, toDate);
+		}
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/trade-messages-stats/byCountry", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<Object>> getTradeMessagesGroupByCountry(
+			@RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime fromDate,
+			@RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime toDate)
+			throws URISyntaxException {
+		log.debug("REST request to get a page of TradeMessages");
+		List<Object> results = null;
+		if (fromDate == null || toDate == null) {
+			results = tradeMessageService.findByOriginatingCountry();
+		} else {
+			results = tradeMessageService.findByOriginatingCountry(fromDate, toDate);
+		}
+		return new ResponseEntity<>(results, HttpStatus.OK);
+	}
+
 }

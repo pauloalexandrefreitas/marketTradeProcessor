@@ -4,14 +4,11 @@
  * Licensed under MIT (https://github.com/twbs/../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/blob/master/LICENSE)
  */
 
+
 // Core variables
 @import "custom-bootstrap-variables";
 
-// Override icon-font-path
-$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
-
 // Core mixins
-@import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 // Reset and dependencies

@@ -9,14 +9,11 @@
 		var vm = this;
 
 		vm.tradeMessages = [];
-
-		vm.currencyFromLabels = [];
-		vm.currencyFromSeries = [ 'Sell', 'Buy' ];
-		vm.currencyFromData = {};
-		vm.currencyToLabels = [];
-		vm.currencyToSeries = [ 'Sell', 'Buy' ];
-		vm.currencyToData = {};
-
+		vm.marketData = {
+			'labels' : [],
+			'data' : [ [], [] ],
+			'series' : [ 'Total Sell', 'Total Buy' ]
+		};
 		vm.chartOptions = {
 			maintainAspectRatio : false,
 			scales : {
@@ -35,21 +32,16 @@
 
 		function showTradeMessage(tradeMessage) {
 			vm.tradeMessages.push(tradeMessage);
-
-			if (vm.currencyFromLabels.indexOf(tradeMessage.currencyFrom) === -1) {
-				vm.currencyFromLabels.push(tradeMessage.currencyFrom);
-				vm.currencyFromData[tradeMessage.currencyFrom] = [ [], [] ];
+			var market = tradeMessage.currencyFrom + '->' + tradeMessage.currencyTo;
+			var index = vm.marketData.labels.indexOf(market);
+			if (index === -1) {
+				vm.marketData.labels.push(market);
+				vm.marketData.data[0].push(tradeMessage.amountSell);
+				vm.marketData.data[1].push(tradeMessage.amountBuy);
+			} else {
+				vm.marketData.data[0][index] += tradeMessage.amountSell;
+				vm.marketData.data[1][index] += tradeMessage.amountBuy;
 			}
-			if (vm.currencyToLabels.indexOf(tradeMessage.currencyTo) === -1) {
-				vm.currencyToLabels.push(tradeMessage.currencyTo);
-				vm.currencyToData[tradeMessage.currencyTo] = [ [], [] ];
-			}
-
-			vm.currencyFromData[tradeMessage.currencyFrom][0].push(tradeMessage.amountSell);
-			vm.currencyFromData[tradeMessage.currencyFrom][1].push(tradeMessage.amountBuy);
-			vm.currencyToData[tradeMessage.currencyTo][0].push(tradeMessage.amountSell);
-			vm.currencyToData[tradeMessage.currencyTo][1].push(tradeMessage.amountBuy);
-
 		}
 	}
 })();

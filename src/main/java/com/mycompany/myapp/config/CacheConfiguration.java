@@ -21,52 +21,55 @@ import java.util.SortedSet;
 
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = { MetricsConfiguration.class, DatabaseConfiguration.class })
+@AutoConfigureAfter(value = {
+		MetricsConfiguration.class, DatabaseConfiguration.class
+})
+@Profile("!" + Constants.SPRING_PROFILE_HEROKU)
 public class CacheConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
 
-    @PersistenceContext
-    private EntityManager entityManager;
+	@PersistenceContext
+	private EntityManager entityManager;
 
-    @Inject
-    private MetricRegistry metricRegistry;
+	@Inject
+	private MetricRegistry metricRegistry;
 
-    private net.sf.ehcache.CacheManager cacheManager;
+	private net.sf.ehcache.CacheManager cacheManager;
 
-    @PreDestroy
-    public void destroy() {
-        log.info("Remove Cache Manager metrics");
-        SortedSet<String> names = metricRegistry.getNames();
-        names.forEach(metricRegistry::remove);
-        log.info("Closing Cache Manager");
-        cacheManager.shutdown();
-    }
+	@PreDestroy
+	public void destroy() {
+		log.info("Remove Cache Manager metrics");
+		SortedSet<String> names = metricRegistry.getNames();
+		names.forEach(metricRegistry::remove);
+		log.info("Closing Cache Manager");
+		cacheManager.shutdown();
+	}
 
-    @Bean
-    public CacheManager cacheManager(JHipsterProperties jHipsterProperties) {
-        log.debug("Starting Ehcache");
-        cacheManager = net.sf.ehcache.CacheManager.create();
-        cacheManager.getConfiguration().setMaxBytesLocalHeap(jHipsterProperties.getCache().getEhcache().getMaxBytesLocalHeap());
-        log.debug("Registering Ehcache Metrics gauges");
-        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
-        for (EntityType<?> entity : entities) {
+	@Bean
+	public CacheManager cacheManager(JHipsterProperties jHipsterProperties) {
+		log.debug("Starting Ehcache");
+		cacheManager = net.sf.ehcache.CacheManager.create();
+		cacheManager.getConfiguration().setMaxBytesLocalHeap(jHipsterProperties.getCache().getEhcache().getMaxBytesLocalHeap());
+		log.debug("Registering Ehcache Metrics gauges");
+		Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
+		for (EntityType<?> entity : entities) {
 
-            String name = entity.getName();
-            if (name == null || entity.getJavaType() != null) {
-                name = entity.getJavaType().getName();
-            }
-            Assert.notNull(name, "entity cannot exist without a identifier");
+			String name = entity.getName();
+			if (name == null || entity.getJavaType() != null) {
+				name = entity.getJavaType().getName();
+			}
+			Assert.notNull(name, "entity cannot exist without a identifier");
 
-            net.sf.ehcache.Cache cache = cacheManager.getCache(name);
-            if (cache != null) {
-                cache.getCacheConfiguration().setTimeToLiveSeconds(jHipsterProperties.getCache().getTimeToLiveSeconds());
-                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
-                cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
-            }
-        }
-        EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
-        ehCacheManager.setCacheManager(cacheManager);
-        return ehCacheManager;
-    }
+			net.sf.ehcache.Cache cache = cacheManager.getCache(name);
+			if (cache != null) {
+				cache.getCacheConfiguration().setTimeToLiveSeconds(jHipsterProperties.getCache().getTimeToLiveSeconds());
+				net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
+				cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
+			}
+		}
+		EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();
+		ehCacheManager.setCacheManager(cacheManager);
+		return ehCacheManager;
+	}
 }

@@ -20,8 +20,10 @@
 		vm.loadAll = loadAll;
 		vm.searchQuery = pagingParams.search;
 		vm.currentSearch = pagingParams.search;
-		vm.loadChartData = loadChartData;
+		vm.loadCharts = loadCharts;
+		vm.updateCurrentMarketData = updateCurrentMarketData;
 		vm.dateRange = null;
+		vm.marketData = [];
 
 		loadAll();
 
@@ -94,51 +96,95 @@
 		}
 
 		vm.chartOptions = {
-				maintainAspectRatio : false,
-				scales : {
-					yAxes : [ {
-						display : true,
-						ticks : {
-							suggestedMin : 0
-						}
-					} ]
-				}
-			};
+			maintainAspectRatio : false,
+			scales : {
+				yAxes : [ {
+					display : true,
+					ticks : {
+						suggestedMin : 0
+					}
+				} ]
+			}
+		};
 
 		$scope.$watch(function(scope) {
 			return vm.dateRange;
 		}, function(newVal, oldVal) {
-			vm.loadChartData();
+			vm.loadCharts();
 		});
 
-		function loadChartData() {
+		function loadCharts() {
+			loadMarketAndRateCharts();
+			loadCountryChart();
+		}
+
+		function loadMarketAndRateCharts() {
 			var params = {};
 			if (vm.dateRange !== null) {
 				var arr = vm.dateRange.split(',');
 				params.fromDate = moment().subtract(arr[0], arr[1]).toISOString();
 				params.toDate = moment().toISOString();
 			}
+			vm.marketData = {
+				'labels' : [],
+				'data' : [ [], [] ],
+				'series' : [ 'Total Sell', 'Total Buy' ]
+			};
 
-			vm.currencyFromLabels = [];
-			vm.currencyFromSeries = [ 'Sell', 'Buy' ];
-			vm.currencyFromData = [ [], [] ];
-			vm.currencyToLabels = [];
-			vm.currencyToSeries = [ 'Sell', 'Buy' ];
-			vm.currencyToData = [ [], [] ];
-			TradeMessageStats.currencyFrom(params, function(data) {
+			vm.marketRateData = [];
+
+			TradeMessageStats.byMarket(params, function(data) {
 				angular.forEach(data, function(v, k) {
-					vm.currencyFromLabels.push(v[0]);
-					vm.currencyFromData[0].push(v[1]);
-					vm.currencyFromData[1].push(v[2]);
+					vm.marketData.labels.push(v[0]);
+					vm.marketData.data[0].push(v[1]);
+					vm.marketData.data[1].push(v[2]);
+					vm.marketRateData.push(v[3]);
 				});
 			});
-			TradeMessageStats.currencyTo(params, function(data) {
-				angular.forEach(data, function(v, k) {
-					vm.currencyToLabels.push(v[0]);
-					vm.currencyToData[0].push(v[1]);
-					vm.currencyToData[1].push(v[2]);
-				});
+		}
 
+		function updateCurrentMarketData() {
+			if (angular.isDefined(vm.currentMarket)) {
+				var params = {
+					market : vm.currentMarket
+				};
+				if (vm.dateRange !== null) {
+					var arr = vm.dateRange.split(',');
+					params.fromDate = moment().subtract(arr[0], arr[1]).toISOString();
+					params.toDate = moment().toISOString();
+				}
+				vm.currentMarketData = {
+					'labels' : [ 'Total Sell', 'Total Buy' ],
+					'data' : []
+				};
+
+				TradeMessageStats.specificMarket(params, function(data) {
+					if (data.length === 1) {
+						var v = data[0];
+						vm.currentMarketData.data.push(v[1]);
+						vm.currentMarketData.data.push(v[2]);
+					}
+				});
+			}
+		}
+
+		function loadCountryChart() {
+			var params = {};
+			if (vm.dateRange !== null) {
+				var arr = vm.dateRange.split(',');
+				params.fromDate = moment().subtract(arr[0], arr[1]).toISOString();
+				params.toDate = moment().toISOString();
+			}
+			vm.countryData = {
+				'labels' : [],
+				'data' : [],
+			};
+
+			TradeMessageStats.byCountry(params, function(data) {
+				angular.forEach(data, function(v, k) {
+					vm.countryData.labels.push(v[0]);
+					vm.countryData.data.push(v[1] + v[2]);
+				});
 			});
 		}
 
