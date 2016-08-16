@@ -25,16 +25,16 @@ public interface TradeMessageRepository extends JpaRepository<TradeMessage, Long
 	@Query("select tm.currencyTo, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where tm.timePlaced between ?1 and ?2 group by tm.currencyTo")
 	List<Object> findByCurrencyToBetween(ZonedDateTime fromDate, ZonedDateTime toDate);
 
-	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm group by concat(tm.currencyFrom,tm.currencyTo)")
+	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm group by tm.currencyFrom,tm.currencyTo")
 	List<Object> findByMarket();
 
-	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where tm.timePlaced between ?1 and ?2 group by concat(tm.currencyFrom,tm.currencyTo)")
+	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where tm.timePlaced between ?1 and ?2 group by tm.currencyFrom,tm.currencyTo")
 	List<Object> findByMarket(ZonedDateTime fromDate, ZonedDateTime toDate);
 
-	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where concat(tm.currencyFrom,'->',tm.currencyTo) = ?1 group by concat(tm.currencyFrom,tm.currencyTo)")
+	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where concat(tm.currencyFrom,'->',tm.currencyTo) = ?1 group by tm.currencyFrom,tm.currencyTo")
 	List<Object> findBySpecificMarket(String market);
 
-	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where concat(tm.currencyFrom,'->',tm.currencyTo) = ?1 AND tm.timePlaced between ?2 and ?3 group by concat(tm.currencyFrom,tm.currencyTo)")
+	@Query("select concat(tm.currencyFrom,'->',tm.currencyTo) as market, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm where concat(tm.currencyFrom,'->',tm.currencyTo) = ?1 AND tm.timePlaced between ?2 and ?3 group by tm.currencyFrom,tm.currencyTo")
 	List<Object> findBySpecificMarket(String market, ZonedDateTime fromDate, ZonedDateTime toDate);
 
 	@Query("select tm.originatingCountry, sum(tm.amountSell), sum(tm.amountBuy), avg(tm.rate) from TradeMessage tm group by originatingCountry")
