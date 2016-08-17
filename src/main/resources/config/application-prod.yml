@@ -21,7 +21,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/marketTradeProcessor
         name:
         username: marketTradeProcessor
-        password:
+        password: password
     jpa:
         database-platform: com.mycompany.myapp.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
@@ -34,7 +34,11 @@ spring:
     data:
         elasticsearch:
             cluster-name:
-            cluster-nodes: localhost:9300
+            cluster-nodes:
+            properties:
+                path:
+                  logs: target/elasticsearch/log
+                  data: target/elasticsearch/data
     mail:
         host: localhost
         port: 25
@@ -64,7 +68,7 @@ jhipster:
     cache: # Hibernate 2nd level cache, used by CacheConfiguration
         timeToLiveSeconds: 3600
         ehcache:
-            maxBytesLocalHeap: 256M
+            maxBytesLocalHeap: 16M
     security:
         rememberMe:
             # security key (this key should be unique for your application, and kept secret)

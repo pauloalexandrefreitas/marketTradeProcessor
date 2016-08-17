@@ -30,7 +30,6 @@ public class CustomDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> 
 			try {
 				return CUSTOM_FORMATTER.parse(string).toInstant().atZone(ZoneId.systemDefault());
 			} catch (DateTimeException | ParseException e) {
-				// TODO Auto-generated catch block
 			}
 			try {
 				// JavaScript by default includes time and zone in JSON serialized Dates (UTC/ISO instant format).
@@ -43,7 +42,6 @@ public class CustomDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> 
 				}
 				return ZonedDateTime.parse(string, DEFAULT_FORMATTER);
 			} catch (DateTimeException e) {
-				// TODO Auto-generated catch block
 			}
 		}
 
